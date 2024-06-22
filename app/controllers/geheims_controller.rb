@@ -1,6 +1,6 @@
 class GeheimsController < ApplicationController
   before_action :set_geheim, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!
   # GET /geheims or /geheims.json
   def index
     @geheims = Geheim.all
