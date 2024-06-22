@@ -5,6 +5,9 @@ run: open
 open:
 - open http://localhost:3000
 
+build:
+- docker build . --tag tryout
+
 ruby_version=$(shell cat .ruby-version)
 ruby_gemset=$(shell cat .ruby-gemset)
 rvm-info:

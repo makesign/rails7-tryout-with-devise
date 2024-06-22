@@ -1,5 +1,8 @@
 source "https://rubygems.org"
 
+# workaround for net-pop till fixed with ruby 3.3.4
+gem 'net-pop', github: 'ruby/net-pop'
+
 ruby "3.3.3"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
