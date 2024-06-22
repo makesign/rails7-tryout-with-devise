@@ -1,3 +1,6 @@
+
+# Output of devise install
+
       create  config/initializers/devise.rb
       create  config/locales/devise.en.yml
 ===============================================================================
