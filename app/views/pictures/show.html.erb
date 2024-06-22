@@ -2,6 +2,8 @@
 
 <%= render @picture %>
 
+<%= image_tag @picture.image.variant(:thumb) %>
+
 <div>
   <%= link_to "Edit this picture", edit_picture_path(@picture) %> |
   <%= link_to "Back to pictures", pictures_path %>
