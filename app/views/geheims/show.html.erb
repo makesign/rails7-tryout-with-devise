@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @geheim %>
+
+<div>
+  <%= link_to "Edit this geheim", edit_geheim_path(@geheim) %> |
+  <%= link_to "Back to geheims", geheims_path %>
+
+  <%= button_to "Destroy this geheim", @geheim, method: :delete %>
+</div>
