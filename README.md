@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## active_storage
 
-Things you may want to cover:
+bin/bundle add image_processing
 
-* Ruby version
+bin/rails active_storage:install
+bin/rails db:migrate
 
-* System dependencies
+see https://edgeguides.rubyonrails.org/active_storage_overview.html#setup
+for the tables:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+active_storage_blobs	Stores data about uploaded files, such as filename and content type.
+active_storage_attachments	A polymorphic join table that connects your models to blobs. If your model's class name changes, you will need to run a migration on this table to update the underlying record_type to your model's new class name.
+active_storage_variant_records	If variant tracking is enabled, stores records for each variant that has been generated.

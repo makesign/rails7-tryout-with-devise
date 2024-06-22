@@ -1,0 +1,12 @@
+<div id="<%= dom_id picture %>">
+  <p>
+    <strong>Caption:</strong>
+    <%= picture.caption %>
+  </p>
+
+  <p>
+    <strong>Image:</strong>
+    <%= link_to picture.image.filename, picture.image if picture.image.attached? %>
+  </p>
+
+</div>
