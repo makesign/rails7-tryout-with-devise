@@ -2,6 +2,17 @@
 
 <h1>Categories</h1>
 
+(https://github.com/amerine/acts_as_tree tryout)
+<hr/>
+<%= Category.tree_view(:name) %>
+<hr/>
+<div id="categories">
+
+<% Category.where(name: "root").walk_tree do |c, level| %>
+  <%= link_to "#{'-'*level}#{c.name}", category_path(c) %><br />
+<% end %>
+</div>
+<hr>
 <div id="categories">
   <% @categories.each do |category| %>
     <%= render category %>

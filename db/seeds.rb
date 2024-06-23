@@ -7,3 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+root      = Category.create!("name" => "root")
+child1    = root.children.create!("name" => "child1")
+subchild1 = child1.children.create!("name" => "subchild1")

@@ -4,6 +4,13 @@ run: open
 - bin/dev
 #- bin/rails server
 
+test:
+- RAILS_ENV=test bin/rails db:migrate
+- bin/rails test
+
+migrate:
+- bin/rails db:migrate
+
 open:
 - open http://localhost:3000
 
