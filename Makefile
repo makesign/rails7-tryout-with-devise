@@ -1,7 +1,9 @@
 .RECIPEPREFIX = -
 
 run: open
-- bin/rails server
+- bin/dev
+#- bin/rails server
+
 open:
 - open http://localhost:3000
 
@@ -16,3 +18,6 @@ rvm-info:
 - @echo "rvm gemset use ${ruby_version}@${ruby_gemset}"
 - @echo
 - rvm gemset list
+
+rebuild-css:
+- rm app/assets/builds/application.css && yarn build:css
