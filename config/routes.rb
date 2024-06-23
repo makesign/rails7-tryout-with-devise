@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   resources :pictures
   devise_for :users
   resources :geheims
