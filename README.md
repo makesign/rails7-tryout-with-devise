@@ -1,5 +1,21 @@
 # README
 
+
+# Installation
+
+- install ruby 
+- install a recent node version
+- install a recent yarn version
+
+db migration 
+
+    
+
+nodemon 
+esbuild
+
+
+
 ## active_storage
 
 bin/bundle add image_processing
