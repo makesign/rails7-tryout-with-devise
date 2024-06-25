@@ -77,3 +77,5 @@ gem "cssbundling-rails", "~> 1.4"
 gem "jsbundling-rails", "~> 1.3"
 
 gem "acts_as_tree", "~> 2.9"
+
+gem "cancancan", "~> 3.6"
