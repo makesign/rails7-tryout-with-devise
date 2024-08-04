@@ -41,3 +41,5 @@
 /secrets
 /docker-mounts
 /doc_tryout
+docker-compose*.*
+docker-compose.*.*.*

@@ -3,7 +3,10 @@
 # Docker deployment
 
 
-
+ghcr.io/makesign/rails7-tryout-with-devise   latest        ea9b5728c543   20 minutes ago      924MB
+ghcr.io/makesign/rails7-tryout-with-devise   xxxx          5c404f18c0e8   24 minutes ago      926MB
+vs. 
+mh-local-dev                                 latest        8e782ed64937   2 weeks ago         522MB
 
 ## Generate selfsigned certificate:
 

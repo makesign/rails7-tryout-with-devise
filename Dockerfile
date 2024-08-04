@@ -9,10 +9,10 @@ ENV NODE_ENV production
 WORKDIR /railsapp
 COPY Gemfile Gemfile.lock ./
 
-ENV GENERAL_DEPS="bash gcompat libpq tzdata nodejs npm yarn"
-ENV BUILD_DEPS="git linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev"
+ENV GENERAL_DEPS="bash tzdata"
+ENV BUILD_DEPS="git linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev nodejs npm yarn gcompat"
 ENV NOKOGIRI_SYSTEM_LIBS="build-base libxml2-dev libxslt-dev"
-ENV AO="--no-install-recommends --no-cache"
+ENV AO --no-install-recommends --no-cache
 
 # General dependencies
 RUN apk update \
