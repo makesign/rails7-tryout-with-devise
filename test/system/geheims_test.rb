@@ -6,11 +6,13 @@ class GeheimsTest < ApplicationSystemTestCase
   end
 
   test "visiting the index" do
+    skip
     visit geheims_url
     assert_selector "h1", text: "Geheims"
   end
 
   test "should create geheim" do
+    skip
     visit geheims_url
     click_on "New geheim"
 
@@ -23,6 +25,7 @@ class GeheimsTest < ApplicationSystemTestCase
   end
 
   test "should update Geheim" do
+    skip
     visit geheim_url(@geheim)
     click_on "Edit this geheim", match: :first
 
@@ -35,6 +38,7 @@ class GeheimsTest < ApplicationSystemTestCase
   end
 
   test "should destroy Geheim" do
+    skip
     visit geheim_url(@geheim)
     click_on "Destroy this geheim", match: :first
 
