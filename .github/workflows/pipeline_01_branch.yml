@@ -12,6 +12,6 @@ jobs:
     # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:
-      tags: type=ref
+      tags: type=ref,event=branch
       push: true # branches should not publish (push) docker images!
       target: railsapp-slim
