@@ -49,8 +49,8 @@ services:
          - "443:443"
      environment:
         - NGINX_HOST=${NGINX_HOST:-localhost}
-        - NGINX_CERT=${NGINX_CERT:-/etc/ssl/server.csr}
-        - NGINX_KEY=${NGINX_KEY:-/etc/ssl/server.key}
+        - NGINX_CERT=${NGINX_CERT:-/etc/ssl/nginx-selfsigned.crt}
+        - NGINX_KEY=${NGINX_KEY:-/etc/ssl/nginx-selfsigned.key}
         - NGINX_PORT=80
         - NGINX_SSL_PORT=443
         - NGINX_PROXY=http://railsapp:3000

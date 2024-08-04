@@ -7,16 +7,14 @@
 
 ## Generate selfsigned certificate:
 
-from https://devcenter.heroku.com/articles/ssl-certificate-self
+
+from https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04
 
 cd secrets/nginx
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt
 
-```bash
-openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
-openssl rsa -passin pass:gsahdg -in server.pass.key -out server.key
-rm server.pass.key
-openssl req -new -key server.key -out server.csr
-```
+
+
 
 # Installation
 

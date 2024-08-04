@@ -39,3 +39,4 @@ secrets
 !/app/assets/builds/.keep
 
 /node_modules
+docker_mounts/
