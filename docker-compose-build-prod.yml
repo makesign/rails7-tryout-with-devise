@@ -4,7 +4,8 @@ services:
     build:
       context: .
       #target: railsapp-prod-no-assets
-      target: railsapp-prod
+      #target: railsapp-prod
+      target: railsapp-slim
     ports:
       - "3000:3000"
     restart: "no"

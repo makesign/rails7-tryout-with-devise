@@ -3,7 +3,7 @@
 name: Branch
 on:
   push:
-    branches: [ 'xxx' ]
+    branches: [ '*' ]
     tags-ignore: [ '*' ]
 
 jobs:
@@ -13,5 +13,5 @@ jobs:
     uses: ./.github/workflows/pipeline_02_structure.yml
     with:
       tags: type=sha
-      push: false # branches should not publish (push) docker images!
-      target: modhand-dev
+      push: true # branches should not publish (push) docker images!
+      target: railsapp-slim

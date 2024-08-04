@@ -4,7 +4,6 @@ ENV RAILSAPP_IMAGE=railsapp-base
 ENV BUNDLER_VERSION=2.3.24
 
 ENV RAILS_ENV production
-ENV NODE_ENV production
 
 WORKDIR /railsapp
 COPY Gemfile Gemfile.lock ./
@@ -37,35 +36,17 @@ RUN apk update \
 
 ENTRYPOINT ["./docker-entrypoints/docker-entrypoint.sh"]
 
-# -------------------------------------------------------------------
-# Production without assets (for Pull Requests)
-# -------------------------------------------------------------------
-
-FROM railsapp-base AS railsapp-prod-no-assets
-ENV RAILSAPP_IMAGE=railsapp-prod-no-assets
-  
-COPY . ./
 
 # -------------------------------------------------------------------
 # Production
 # -------------------------------------------------------------------
 
-FROM railsapp-prod-no-assets AS railsapp-prod
+FROM railsapp-base AS railsapp-prod
 ENV RAILSAPP_IMAGE=railsapp-prod
-
+COPY . ./
 RUN set -ex  \
   && yarn \
   && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-# -------------------------------------------------------------------
-# Production for manual assets:precompile
-# -------------------------------------------------------------------
-
-  FROM railsapp-prod-no-assets AS railsapp-prod-2
-  ENV RAILSAPP_IMAGE=railsapp-prod
-  
-  # RUN set -ex  \
-  #   && yarn \
-  #   && bin/rails assets:precompile 
   
 # -------------------------------------------------------------------
 # Development & Test
@@ -80,3 +61,17 @@ ENV NODE_ENV development
 RUN bundle config unset without \
     && bundle config \
     && bundle install
+
+# -------------------------------------------------------------------
+# slimmer production
+# -------------------------------------------------------------------
+
+
+FROM ruby:3.3.3-alpine AS railsapp-slim
+ENV RAILSAPP_IMAGE=railsapp-slim
+ENV RAILS_ENV production
+WORKDIR /railsapp
+
+COPY --from=railsapp-prod . ./
+COPY --from=railsapp-prod /usr/local/bundle/gems /usr/local/bundle/gems/
+
