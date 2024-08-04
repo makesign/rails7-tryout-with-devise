@@ -60,10 +60,22 @@ ENV RAILSAPP_IMAGE=railsapp-prod
 ARG RAILS_MASTER_KEY
 ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
 
-# RUN set -ex  \
-#   && yarn \
-#   && bin/rails assets:precompile 
+RUN set -ex  \
+  && yarn \
+  && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+# -------------------------------------------------------------------
+# Production for manual assets:precompile
+# -------------------------------------------------------------------
 
+  FROM railsapp-prod-no-assets AS railsapp-prod-2
+  ENV RAILSAPP_IMAGE=railsapp-prod
+  ARG RAILS_MASTER_KEY
+  ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
+  
+  # RUN set -ex  \
+  #   && yarn \
+  #   && bin/rails assets:precompile 
+  
 # -------------------------------------------------------------------
 # Development & Test
 # -------------------------------------------------------------------

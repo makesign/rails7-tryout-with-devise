@@ -1,7 +1,7 @@
 require "test_helper"
 
 class GeheimsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::ControllerHelpers
+  include Devise::Test::IntegrationHelpers
   setup do
     @geheim = geheims(:one)
     @user = users(:one)
