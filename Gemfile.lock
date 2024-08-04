@@ -3,6 +3,7 @@ GIT
   revision: e8d0afe2773b9eb6a23c39e9e437f6fc0fc7c733
   specs:
     net-pop (0.1.2)
+      net-protocol
 
 GEM
   remote: https://rubygems.org/
@@ -119,6 +120,7 @@ GEM
       warden (~> 1.2.3)
     drb (2.2.1)
     erubi (1.13.0)
+    ffi (1.17.0)
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm-linux-gnu)
     ffi (1.17.0-arm64-darwin)
@@ -158,6 +160,7 @@ GEM
     matrix (0.4.2)
     mini_magick (4.13.1)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.7)
     minitest (5.24.0)
     msgpack (1.7.2)
     mutex_m (0.2.0)
@@ -169,6 +172,9 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.3)
+    nokogiri (1.16.6)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.16.6-aarch64-linux)
       racc (~> 1.4)
     nokogiri (1.16.6-arm-linux)
@@ -252,6 +258,8 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    sqlite3 (1.7.3)
+      mini_portile2 (~> 2.8.0)
     sqlite3 (1.7.3-aarch64-linux)
     sqlite3 (1.7.3-arm-linux)
     sqlite3 (1.7.3-arm64-darwin)
@@ -290,6 +298,7 @@ PLATFORMS
   aarch64-linux
   arm-linux
   arm64-darwin
+  ruby
   x86-linux
   x86_64-darwin
   x86_64-linux
@@ -321,4 +330,4 @@ RUBY VERSION
    ruby 3.3.3p89
 
 BUNDLED WITH
-   2.5.11
+   2.3.24

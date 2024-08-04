@@ -9,11 +9,8 @@
 services:
   postgres:
     platform: linux/arm64/v8
-    container_name: slideshow-postgres
     environment:
       - POSTGRES_DB=railsapp-dev
-    volumes:
-      - ./docker_mounts/pg_data:/var/lib/postgresql/data
     ports:
      - "5432:5432" # don't do this on production!
   railsapp:
@@ -28,9 +25,9 @@ services:
       - .:/railsapp  # use app files from host
       - /railsapp/node_modules # but not the node_modules
     environment:
+      - RAILS_MASTER_KEY
       - POSTGRES_DB=railsapp-dev
-      - RAILS_ENV=development
-      - RAILS_MASTER_KEY=
+      - RAILS_ENV=production
       - CHROME_URL=http://chrome-server:4444
     restart: "no"
   chrome-server:
