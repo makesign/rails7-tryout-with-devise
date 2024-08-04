@@ -19,7 +19,6 @@ RUN apk update \
   && apk add $AO $GENERAL_DEPS \
   && echo "Installing build dependencies..." \
   && apk add $AO --virtual builddependencies $BUILD_DEPS \
-  && apk add $AO --virtual assetdeps $ASSETS_DEPS \
   && echo "Installing Nokogiri system libraries..." \
   && apk add $AO $NOKOGIRI_SYSTEM_LIBS \
   && echo "Installing Nokogiri gem..." \
