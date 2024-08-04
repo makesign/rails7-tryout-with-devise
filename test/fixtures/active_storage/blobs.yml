@@ -1,0 +1,2 @@
+# active_storage/blobs.yml
+fernsehturm_blob: <%= ActiveStorage::FixtureSet.blob filename: "fernsehturm.jpg", service_name: "test_fixtures" %>
