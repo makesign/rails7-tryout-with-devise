@@ -20,13 +20,11 @@ on:
         required: true
         type: boolean
       target:
-        required: false
+        required: true
         type: string
-        default: modhand-prod
       environment:
-        required: false
+        required: true
         type: string
-        default: staging
 
 
 env:

@@ -9,10 +9,6 @@ on:
     secrets:
       rails_master_key:
         required: false
-      nudge:
-        required: false
-      nudge_key:
-        required: false
     inputs:
       tags:
         required: true
@@ -23,11 +19,11 @@ on:
       target:
         required: false
         type: string
-        default: modhand-prod
+        default: railsapp-prod
       environment:
         required: false
         type: string
-        default: staging
+        default: production
 
 jobs:
   test_app:
@@ -47,20 +43,6 @@ jobs:
       rails_master_key: ${{ secrets.rails_master_key }}
       nudge: ${{ secrets.nudge }}
       nudge_key: ${{ secrets.nudge_key }}
-
-  docker-complete:
-    name: Docker Complete
-    uses: ./.github/workflows/pipeline_05_docker_complete.yml
-    with:
-      tags: ${{ inputs.tags }}
-      push: ${{ inputs.push }}
-      target: ${{ inputs.target }}
-      environment: ${{ inputs.environment }}
-    secrets:
-      rails_master_key: ${{ secrets.rails_master_key }}
-      nudge: ${{ secrets.nudge }}
-      nudge_key: ${{ secrets.nudge_key }}
-  
 
   info:
     name: List Parameter

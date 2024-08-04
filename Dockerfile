@@ -48,6 +48,9 @@ ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
   
 COPY . ./
 
+RUN set -ex  \
+  && yarn 
+  
 # -------------------------------------------------------------------
 # Production
 # -------------------------------------------------------------------
@@ -56,14 +59,12 @@ FROM railsapp-prod-no-assets AS railsapp-prod
 ENV RAILSAPP_IMAGE=railsapp-prod
 
 RUN set -ex  \
-  && echo "Installing Yarn globally..." \
-  && npm install --global yarn \
-  && echo "Running yarn install..." \
-  && yarn install || (echo "yarn install failed" && exit 1)  \
-  && echo "Running bundle exec rake assets:precompile..." \
-  && bundle exec rake assets:precompile --trace 2>&1 | tee /tmp/assets-precompile.log \
-  && echo "Running rails assets:precompile..." \
-  && rails assets:precompile --trace 2>&1 | tee /tmp/rails-assets-precompile.log || (echo "rails assets:precompile failed" && cat /tmp/rails-assets-precompile.log && exit 1)
+  && yarn \
+  && bin/rails assets:precompile 
+
+# -------------------------------------------------------------------
+# Development & Test
+# -------------------------------------------------------------------
 
 FROM railsapp-base AS railsapp-dev
 ENV RAILSAPP_IMAGE=railsapp-dev
