@@ -8,10 +8,10 @@ ENV RAILS_ENV production
 WORKDIR /railsapp
 COPY Gemfile Gemfile.lock ./
 
-ENV GENERAL_DEPS="bash tzdata nodejs npm yarn "
-ENV BUILD_DEPS="git linux-headers libpq libxml2-dev libxslt-dev build-base postgresql-dev gcompat"
+ENV GENERAL_DEPS="bash tzdata libpq"
+ENV BUILD_DEPS="git linux-headers libxml2-dev libxslt-dev build-base postgresql-dev gcompat"
 ENV NOKOGIRI_SYSTEM_LIBS="build-base libxml2-dev libxslt-dev"
-ENV AO --no-install-recommends --no-cache
+ENV AO --no-cache
 
 # General dependencies
 RUN apk update \
@@ -19,6 +19,7 @@ RUN apk update \
   && apk add $AO $GENERAL_DEPS \
   && echo "Installing build dependencies..." \
   && apk add $AO --virtual builddependencies $BUILD_DEPS \
+  && apk add $AO --virtual assetdeps $ASSETS_DEPS \
   && echo "Installing Nokogiri system libraries..." \
   && apk add $AO $NOKOGIRI_SYSTEM_LIBS \
   && echo "Installing Nokogiri gem..." \
@@ -44,9 +45,13 @@ ENTRYPOINT ["./docker-entrypoints/docker-entrypoint.sh"]
 FROM railsapp-base AS railsapp-prod
 ENV RAILSAPP_IMAGE=railsapp-prod
 COPY . ./
+ENV ASSETS_DEPS="nodejs npm yarn"
 RUN set -ex  \
+  && apk add $AO --virtual assetdeps $ASSETS_DEPS \
   && yarn \
-  && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+  && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile \
+  && apk del assetdeps
+
   
 # -------------------------------------------------------------------
 # Development & Test
