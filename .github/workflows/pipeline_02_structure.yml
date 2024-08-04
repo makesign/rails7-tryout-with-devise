@@ -6,9 +6,6 @@
 name: "Pipeline"
 on:
   workflow_call:
-    secrets:
-      rails_master_key:
-        required: false
     inputs:
       tags:
         required: true
@@ -39,8 +36,6 @@ jobs:
       push: ${{ inputs.push }}
       target: ${{ inputs.target }}
       environment: ${{ inputs.environment }}
-    secrets:
-      rails_master_key: ${{ secrets.rails_master_key }}
 
   info:
     name: List Parameter

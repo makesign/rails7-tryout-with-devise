@@ -6,8 +6,6 @@ name: Build and Push Image
 on:
   workflow_call:
     secrets:
-      rails_master_key:
-        required: false
     inputs:
       tags:
         required: true
@@ -69,7 +67,6 @@ jobs:
         with:
           context: .
           target: ${{ inputs.target }}
-          build-args: RAILS_MASTER_KEY=${{ secrets.rails_master_key }}
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -17,7 +17,7 @@ class PicturesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create picture" do
     assert_difference("Picture.count") do
-      post pictures_url, params: { picture: { caption: @picture.caption } }
+      post pictures_url, params: { picture: { caption: @picture.caption, image: @picture.image } }
     end
 
     assert_redirected_to picture_url(Picture.last)

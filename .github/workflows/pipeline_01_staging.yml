@@ -14,6 +14,3 @@ jobs:
       tags: type=sha
       push: true
       environment: staging
-    secrets:
-      rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
- 
