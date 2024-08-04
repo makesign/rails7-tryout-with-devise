@@ -35,7 +35,7 @@ RUN apk update \
   && echo "Cleaning up build dependencies..." \
   && apk del builddependencies
 
-ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
+ENTRYPOINT ["./docker-entrypoints/docker-entrypoint.sh"]
 
 # -------------------------------------------------------------------
 # Production without assets (for Pull Requests)

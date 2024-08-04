@@ -39,5 +39,5 @@
 
 # Ignore secrets and docker mounts.
 /secrets
-/docker_mounts
+/docker-mounts
 /doc_tryout

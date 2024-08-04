@@ -28,3 +28,6 @@ rvm-info:
 
 rebuild-css:
 - rm app/assets/builds/application.css && yarn build:css
+
+rebuild:
+- docker-compose up -d --build --force-recreate railsapp
