@@ -1,0 +1,59 @@
+# default configuration for production
+# use .env file to differentiate between prod and dev
+services:
+  postgres:
+    container_name: railsapp-database
+    image: postgres:13.4-alpine
+    environment:
+      - APPLICATION=rails-railsapp
+      - POSTGRES_PASSWORD=railsapp
+      - POSTGRES_USER=railsapp
+      - POSTGRES_DB=railsapp-prod
+      # https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+      - POSTGRES_HOST_AUTH_METHOD=password
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    restart: always
+  railsapp:
+    image: ghcr.io/makesign/rails7-tryout-with-devise:${TAG}
+    container_name: railsapp-container
+    environment:
+      - TAG
+      - RAILS_ENV=production
+      - RAILS_DB_HOST="railsapp-postgres"
+      - POSTGRES_USER=railsapp
+      - POSTGRES_PASSWORD=railsapp
+      - POSTGRES_DB=railsapp-prod
+      - RAILS_SERVE_STATIC_FILES=true
+      - TZ=Europe/Berlin
+      - EDITOR=vi
+    #env_file:
+    # - ${SECRET_ENV_FILE}
+    depends_on:
+      - postgres
+    volumes:
+      - ./docker_mounts/logs/railsapp
+      - ./docker_mounts/secrets:/railsapp/secrets
+    restart: always
+  nginx:
+     image: nginx:latest
+     container_name: railsapp_reverse_proxy
+     volumes:
+         - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+         - ./nginx/templates:/etc/nginx/templates
+         - ./docker_mounts/logs/nginx:/var/log/nginx
+         - ./secrets/nginx:/etc/ssl
+     ports:
+         - "80:80"
+         - "443:443"
+     environment:
+        - NGINX_HOST=${NGINX_HOST:-localhost}
+        - NGINX_CERT=${NGINX_CERT:-/ssl/server.crt}
+        - NGINX_KEY=${NGINX_KEY:-/ssl/server.key}
+        - NGINX_PORT=80
+        - NGINX_SSL_PORT=443
+        - NGINX_PROXY=http://railsapp:3000
+        - NGINX_ENTRYPOINT_QUIET_LOGS=1
+     depends_on:
+         - railsapp
+     restart: always

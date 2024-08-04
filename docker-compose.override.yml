@@ -1,0 +1,38 @@
+# overrides for local usage & development -
+# ------------------------------------------------
+# ** don't ever copy to production machine! **
+# ------------------------------------------------
+
+# see doc: https://docs.docker.com/compose/compose-file/compose-file-v3/
+# override precedence:
+# https://docs.docker.com/compose/extends/#adding-and-overriding-configuration
+services:
+  postgres:
+    platform: linux/arm64/v8
+    container_name: slideshow-postgres
+    environment:
+      - POSTGRES_DB=railsapp-dev
+    volumes:
+      - ./docker_mounts/pg_data:/var/lib/postgresql/data
+    ports:
+     - "5432:5432" # don't do this on production!
+  railsapp:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: railsapp-prod-no-assets
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/railsapp  # use app files from host
+      - /railsapp/node_modules # but not the node_modules
+    environment:
+      - POSTGRES_DB=railsapp-dev
+      - RAILS_ENV=development
+      - RAILS_MASTER_KEY=
+      - CHROME_URL=http://chrome-server:4444
+    restart: "no"
+  chrome-server:
+    platform: linux/x86_64
+    image: selenium/standalone-chrome:126.0

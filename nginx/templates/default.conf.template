@@ -1,0 +1,30 @@
+server {
+        listen ${NGINX_PORT} default_server;
+        listen [::]:${NGINX_PORT} default_server;
+        server_name _;
+        return 301 https://$host$request_uri;
+}
+
+server {
+        listen ${NGINX_SSL_PORT} ssl default_server;
+        listen [::]:${NGINX_SSL_PORT} ssl default_server;
+        ssl_certificate      /ssl/server.crt;
+        ssl_certificate_key  /ssl/server.key;
+
+
+        server_name          ${NGINX_HOST}  ;
+        
+        location / {
+                proxy_pass http://rails-slideshow;
+                proxy_set_header  Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header  X-Forwarded-Proto $scheme;
+                proxy_set_header  X-Forwarded-Ssl on; # Optional
+                proxy_set_header  X-Forwarded-Port $server_port;
+                proxy_set_header  X-Forwarded-Host $host;
+        }
+
+        # root /var/www/html;
+        # index index.html;
+}

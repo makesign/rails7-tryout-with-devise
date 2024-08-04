@@ -30,8 +30,14 @@
 /tmp/storage/*
 !/tmp/storage/.keep
 
+
 # Ignore assets.
 /node_modules/
 /app/assets/builds/*
 !/app/assets/builds/.keep
 /public/assets
+
+# Ignore secrets and docker mounts.
+/secrets
+/docker_mounts
+/doc_tryout
