@@ -41,3 +41,5 @@ secrets
 /node_modules
 /docker-mounts/*
 !/docker-mounts/.keep
+test/fixtures/files/**/
+!test/fixtures/files

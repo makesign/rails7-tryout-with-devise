@@ -1,6 +1,6 @@
 # overrides for local usage & development -
 # ------------------------------------------------
-# ** don't ever copy to production machine! **
+# ** never copy to production machine! **
 # ------------------------------------------------
 
 # see doc: https://docs.docker.com/compose/compose-file/compose-file-v3/
@@ -18,14 +18,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: railsapp-prod-no-assets
+      target: railsapp-prod
     ports:
       - "3000:3000"
     volumes:
       - .:/railsapp  # use app files from host
       - /railsapp/node_modules # but not the node_modules
     environment:
-      - RAILS_MASTER_KEY
       - POSTGRES_DB=railsapp-dev
       - RAILS_ENV=production
       - CHROME_URL=http://chrome-server:4444

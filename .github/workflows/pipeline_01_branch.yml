@@ -3,7 +3,7 @@
 name: Branch
 on:
   push:
-    branches: [ '*' ]
+    branches: [ 'xxx' ]
     tags-ignore: [ '*' ]
 
 jobs:

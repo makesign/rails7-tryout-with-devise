@@ -1,8 +1,11 @@
 require "test_helper"
 
 class GeheimsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::ControllerHelpers
   setup do
     @geheim = geheims(:one)
+    @user = users(:one)
+    sign_in(@user)
   end
 
   test "should get index" do

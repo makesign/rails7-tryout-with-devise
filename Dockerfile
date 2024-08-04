@@ -50,13 +50,15 @@ COPY . ./
 
 RUN set -ex  \
   && yarn 
-  
+
 # -------------------------------------------------------------------
 # Production
 # -------------------------------------------------------------------
 
 FROM railsapp-prod-no-assets AS railsapp-prod
 ENV RAILSAPP_IMAGE=railsapp-prod
+ARG RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
 
 RUN set -ex  \
   && yarn \

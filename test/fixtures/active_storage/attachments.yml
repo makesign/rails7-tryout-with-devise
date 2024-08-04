@@ -3,3 +3,8 @@ fernsehturm_attachment:
   name: fernsehturm
   record: one (Picture)
   blob: fernsehturm_blob
+
+fernsehturm_attachment:
+  name: fernsehturm
+  record: two (Picture)
+  blob: fernsehturm_blob

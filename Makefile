@@ -8,6 +8,7 @@ test:
 - RAILS_ENV=test bin/rails db:migrate
 - bin/rails test
 
+
 migrate:
 - bin/rails db:migrate
 
@@ -29,5 +30,18 @@ rvm-info:
 rebuild-css:
 - rm app/assets/builds/application.css && yarn build:css
 
+### Docker
+
+# run source secrets/set_rails_master_key.sh first
+stop:
+- docker compose down
+start:
+- docker compose up
+prod:
+- source secrets/set_rails_master_key.sh first && docker compose -f docker-compose.yml -f docker-compose-build-prod.yml up
+
+bash:
+- docker compose exec -ti railsapp bash
+
 rebuild:
-- docker-compose up -d --build --force-recreate railsapp
+- docker compose  -f docker-compose.yml -f docker-compose-build-prod.yml   up --build --force-recreate railsapp
