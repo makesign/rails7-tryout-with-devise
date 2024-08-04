@@ -43,13 +43,8 @@ ENTRYPOINT ["./docker-entrypoints/docker-entrypoint.sh"]
 
 FROM railsapp-base AS railsapp-prod-no-assets
 ENV RAILSAPP_IMAGE=railsapp-prod-no-assets
-ARG RAILS_MASTER_KEY
-ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
   
 COPY . ./
-
-RUN set -ex  \
-  && yarn 
 
 # -------------------------------------------------------------------
 # Production
@@ -57,8 +52,6 @@ RUN set -ex  \
 
 FROM railsapp-prod-no-assets AS railsapp-prod
 ENV RAILSAPP_IMAGE=railsapp-prod
-ARG RAILS_MASTER_KEY
-ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
 
 RUN set -ex  \
   && yarn \
@@ -69,8 +62,6 @@ RUN set -ex  \
 
   FROM railsapp-prod-no-assets AS railsapp-prod-2
   ENV RAILSAPP_IMAGE=railsapp-prod
-  ARG RAILS_MASTER_KEY
-  ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
   
   # RUN set -ex  \
   #   && yarn \
