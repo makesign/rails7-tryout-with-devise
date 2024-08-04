@@ -60,9 +60,9 @@ ENV RAILSAPP_IMAGE=railsapp-prod
 ARG RAILS_MASTER_KEY
 ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
 
-RUN set -ex  \
-  && yarn \
-  && bin/rails assets:precompile 
+# RUN set -ex  \
+#   && yarn \
+#   && bin/rails assets:precompile 
 
 # -------------------------------------------------------------------
 # Development & Test

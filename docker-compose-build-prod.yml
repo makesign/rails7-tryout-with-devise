@@ -1,0 +1,10 @@
+services:
+  railsapp:
+    platform: linux/amd64
+    build:
+      context: .
+      #target: railsapp-prod-no-assets
+      target: railsapp-prod
+    ports:
+      - "3000:3000"
+    restart: "no"
