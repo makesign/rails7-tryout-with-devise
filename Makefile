@@ -48,3 +48,7 @@ rebuild:
 
 original:
 - docker build -f Dockerfile.rails.original --tag original:latest --target app_image .
+
+
+prod:
+- docker compose  -f docker-compose.yml up -d
