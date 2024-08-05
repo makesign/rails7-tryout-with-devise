@@ -67,7 +67,7 @@ RUN bundle config unset without \
     && bundle install
 
 # -------------------------------------------------------------------
-# slimmer production
+# slim production
 # -------------------------------------------------------------------
 
 

@@ -45,3 +45,6 @@ bash:
 
 rebuild:
 - docker compose  -f docker-compose.yml -f docker-compose-build-prod.yml   up --build --force-recreate railsapp
+
+original:
+- docker build -f Dockerfile.rails.original --tag original:latest --target app_image .

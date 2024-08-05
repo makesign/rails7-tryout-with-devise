@@ -17,6 +17,8 @@ services:
   railsapp:
     image: ghcr.io/makesign/rails7-tryout-with-devise:${TAG}
     container_name: railsapp-container
+    env_file:
+      - secrets/rails_master_key.env
     environment:
       - TAG
       - RAILS_MASTER_KEY

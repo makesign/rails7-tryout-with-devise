@@ -3,13 +3,22 @@
 # Docker deployment
 
 
+
+###
+
+Die Images sind ziemlich groß, hier im vgl. Zu modulehandbook:
+
 ghcr.io/makesign/rails7-tryout-with-devise   latest        ea9b5728c543   20 minutes ago      924MB
 ghcr.io/makesign/rails7-tryout-with-devise   xxxx          5c404f18c0e8   24 minutes ago      926MB
 vs. 
 mh-local-dev                                 latest        8e782ed64937   2 weeks ago         522MB
 
-## Generate selfsigned certificate:
+die ersten verkleinerungsversuche haben nur wenig gebracht:
 
+ghcr.io/makesign/rails7-tryout-with-devise   sha-857afc2   7d2469dcad71   15 hours ago    859MB
+
+## Generate selfsigned certificate:
+(for nginx ssl)
 
 from https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04
 
@@ -24,7 +33,6 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key
 
 - install ruby 
 - install a recent node version
-- install a recent yarn version
 
 db migration 
 
