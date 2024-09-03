@@ -37,6 +37,9 @@ jobs:
     steps:
       - name: chrome
         uses: browser-actions/setup-chrome@latest
+        with:
+          install-chromedriver: true
+          # install-dependencies: false
         
       - name: Check out repo code
         uses: actions/checkout@v4
