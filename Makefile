@@ -52,3 +52,6 @@ original:
 
 prod:
 - docker compose  -f docker-compose.yml up -d
+
+ssh_production:
+- ssh local@makesign.f4.htw-berlin.de
