@@ -3,7 +3,7 @@
 name: Branch
 on:
   push:
-    branches: [ '*' ]
+    branches: [ 'docker_asset_pipeline' ]
     tags-ignore: [ '*' ]
 
 jobs:

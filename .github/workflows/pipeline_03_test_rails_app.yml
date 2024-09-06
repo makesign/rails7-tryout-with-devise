@@ -17,7 +17,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    continue-on-error: true
+    # continue-on-error: true
     services:
       postgres:
         image: postgres
@@ -69,4 +69,4 @@ jobs:
         if: ${{ always() }}
         run: |
           ls -lart log
-          less "log/test.log"
+          less -f "log/test.log"
