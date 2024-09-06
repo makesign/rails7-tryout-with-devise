@@ -78,4 +78,3 @@ WORKDIR /railsapp
 
 COPY --from=railsapp-prod . ./
 COPY --from=railsapp-prod /usr/local/bundle/gems /usr/local/bundle/gems/
-
