@@ -17,12 +17,12 @@ services:
 
   module-handbook-exporter:
     platform: linux/x86_64/v8
-    image: ghcr.io/makesign/express-app:${TAG}
+    image: ghcr.io/makesign/rails-auth-tryout:${TAG}
     container_name: express-app
     restart: always
 
   railsapp:
-    image: ghcr.io/makesign/rails7-tryout-with-devise:${TAG}
+    image: ghcr.io/makesign/makesign/rails-auth-tryout:${TAG}
     container_name: railsapp-container
     env_file:
       - secrets/rails_master_key.env
