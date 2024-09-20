@@ -14,6 +14,13 @@ services:
     volumes:
       - ./docker-mounts/pg_data:/var/lib/postgresql/data
     restart: always
+
+  module-handbook-exporter:
+    platform: linux/x86_64/v8
+    image: ghcr.io/makesign/express-app:${TAG}
+    container_name: express-app
+    restart: always
+
   railsapp:
     image: ghcr.io/makesign/rails7-tryout-with-devise:${TAG}
     container_name: railsapp-container
@@ -39,6 +46,7 @@ services:
       - ./docker-mounts/secrets:/railsapp/secrets
     restart: always
   nginx:
+     env_file: *env_file
      image: nginx:latest
      container_name: railsapp_reverse_proxy
      volumes:
