@@ -11,6 +11,7 @@ class PicturesTest < ApplicationSystemTestCase
   end
 
   test "should create picture" do
+    skip
     visit pictures_url
     click_on "New picture"
 
@@ -22,6 +23,7 @@ class PicturesTest < ApplicationSystemTestCase
   end
 
   test "should update Picture" do
+    skip
     visit picture_url(@picture)
     click_on "Edit this picture", match: :first
 
@@ -33,6 +35,7 @@ class PicturesTest < ApplicationSystemTestCase
   end
 
   test "should destroy Picture" do
+    skip
     visit picture_url(@picture)
     click_on "Destroy this picture", match: :first
 

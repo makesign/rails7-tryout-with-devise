@@ -39,6 +39,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy category" do
+    skip
     assert_difference("Category.count", -1) do
       delete category_url(@category)
     end

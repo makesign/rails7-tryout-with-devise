@@ -39,3 +39,7 @@ secrets
 !/app/assets/builds/.keep
 
 /node_modules
+/docker-mounts/*
+!/docker-mounts/.keep
+test/fixtures/files/**/
+!test/fixtures/files

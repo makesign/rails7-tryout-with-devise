@@ -1,0 +1,15 @@
+# names are short as they are pre-pended on gh actions
+name: Pull Request
+on:
+    # pull_request:
+    #     branches: [ 'main' ]
+    workflow_call:
+jobs:
+  pull-request:
+    name: PR
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: ./.github/workflows/pipeline_02_structure.yml
+    with:
+      tags: type=ref,event=pr
+      push: false
+      target: railsapp-prod

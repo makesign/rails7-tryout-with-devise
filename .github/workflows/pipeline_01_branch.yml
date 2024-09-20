@@ -1,0 +1,17 @@
+# this can be used to start the full pipeline from dev branches
+# names are short as they are pre-pended on gh actions
+name: Branch
+on:
+  push:
+    branches: [ 'docker_asset_pipeline' ]
+    tags-ignore: [ '*' ]
+
+jobs:
+  branch:
+    name: Branch
+    # if: ${{ github.ref_type == 'branch' && github.ref == 'refs/heads/master'}}
+    uses: ./.github/workflows/pipeline_02_structure.yml
+    with:
+      tags: type=ref,event=branch
+      push: true # branches should not publish (push) docker images!
+      target: railsapp-slim

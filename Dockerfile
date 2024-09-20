@@ -1,62 +1,80 @@
-# syntax = docker/dockerfile:1
+FROM ruby:3.3.3-alpine AS railsapp-base
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.3.3
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+ENV RAILSAPP_IMAGE=railsapp-base
+ENV BUNDLER_VERSION=2.3.24
 
-# Rails app lives here
-WORKDIR /rails
+ENV RAILS_ENV production
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
-
-
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config
-
-# Install application gems
+WORKDIR /railsapp
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
 
-# Copy application code
-COPY . .
+ENV GENERAL_DEPS="bash tzdata libpq"
+ENV BUILD_DEPS="git linux-headers libxml2-dev libxslt-dev build-base postgresql-dev gcompat"
+ENV NOKOGIRI_SYSTEM_LIBS="build-base libxml2-dev libxslt-dev"
+ENV AO --no-cache
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+# General dependencies
+RUN apk update \
+  && echo "Installing general dependencies..." \
+  && apk add $AO $GENERAL_DEPS \
+  && echo "Installing build dependencies..." \
+  && apk add $AO --virtual builddependencies $BUILD_DEPS \
+  && echo "Installing Nokogiri system libraries..." \
+  && apk add $AO $NOKOGIRI_SYSTEM_LIBS \
+  && echo "Installing Nokogiri gem..." \
+  && gem install nokogiri --platform=ruby -- --use-system-libraries \
+  && echo "Installing Bundler..." \
+  && gem install bundler -v $BUNDLER_VERSION \
+  && echo "Configuring Bundler..." \
+  && bundle config set force_ruby_platform true \
+  && bundle config set without 'development test' \
+  && bundle config \
+  && echo "Running bundle install..." \
+  && bundle install \
+  && echo "Cleaning up build dependencies..." \
+  && apk del builddependencies
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+ENTRYPOINT ["./docker-entrypoints/docker-entrypoint.sh"]
 
 
-# Final stage for app image
-FROM base
+# -------------------------------------------------------------------
+# Production
+# -------------------------------------------------------------------
 
-# Install packages needed for deployment
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+FROM railsapp-base AS railsapp-prod
+ENV RAILSAPP_IMAGE=railsapp-prod
+COPY . ./
+ENV ASSETS_DEPS="nodejs npm yarn"
+RUN set -ex  \
+  && apk add $AO --virtual assetdeps $ASSETS_DEPS \
+  && yarn \
+  && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile \
+  && apk del assetdeps
 
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
+  
+# -------------------------------------------------------------------
+# Development & Test
+# -------------------------------------------------------------------
 
-# Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
+FROM railsapp-base AS railsapp-dev
+ENV RAILSAPP_IMAGE=railsapp-dev
 
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+ENV RAILS_ENV development
+ENV NODE_ENV development
 
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-CMD ["./bin/rails", "server"]
+RUN bundle config unset without \
+    && bundle config \
+    && bundle install
+
+# -------------------------------------------------------------------
+# slim production
+# -------------------------------------------------------------------
+
+
+FROM ruby:3.3.3-alpine AS railsapp-slim
+ENV RAILSAPP_IMAGE=railsapp-slim
+ENV RAILS_ENV production
+WORKDIR /railsapp
+
+COPY --from=railsapp-prod . ./
+COPY --from=railsapp-prod /usr/local/bundle/gems /usr/local/bundle/gems/
